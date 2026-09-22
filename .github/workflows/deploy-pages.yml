@@ -29,7 +29,10 @@ jobs:
           NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
       - name: Corrigir caminho dos arquivos visuais
         run: |
-          cp -R dist/client/Editora-Sintechtica/_next dist/client/_next
+          REPO_NAME="${GITHUB_REPOSITORY#*/}"
+          if [ -d "dist/client/${REPO_NAME}/_next" ]; then
+            cp -R "dist/client/${REPO_NAME}/_next" dist/client/_next
+          fi
           touch dist/client/.nojekyll
       - uses: actions/upload-pages-artifact@v3
         with:
